@@ -1,31 +1,25 @@
 /*
 ***************************************************************************************************
-* Project  : I2C Master Bit Bang Driver
-* Filename : I2C_Master_Bit_Bang_Driver.c
+* Project:  I2C Master Bit Bang Driver
+* Filename: I2C_Master_Bit_Bang_Driver.c
 *
-* Created : 01.05.2017
-* Author  : M. Schuepbach
+* Created: 01.05.2017
+* Author:  M. Schuepbach
 *
-* Description : This is a I2C Master Bit Bang Driver. Tested with ATtiny841 and RTC DS1307.
-*               Standard-mode (100kHz) only.
+* Description: This is a I2C Master Bit Bang Driver. Tested with ATtiny841 and RTC DS1307.
+*              Standard-mode (100kHz) only.
 *
-* Source : "https://en.wikipedia.org/wiki/I%C2%B2C#Example_of_bit-banging_the_I.C2.B2C_master_protocol"
+* Source: "https://en.wikipedia.org/wiki/I%C2%B2C#Example_of_bit-banging_the_I.C2.B2C_master_protocol"
 *
 ***************************************************************************************************
 */
 
-
-/*
-***************************************************************************************************
-*                                           INCLUDES
-***************************************************************************************************
-*/
 #include "I2C_Master_Bit_Bang_Driver.h"
 
 
 /*
 ***************************************************************************************************
-*                                   GLOBAL VARIABLES AND ARRAYS
+**                                  GLOBAL VARIABLES AND ARRAYS
 ***************************************************************************************************
 */
 bool I2C_started = false;
@@ -33,7 +27,7 @@ bool I2C_started = false;
 
 /*
 ***************************************************************************************************
-*                                             FUNCTIONS
+**                                           FUNCTIONS
 ***************************************************************************************************
 */
 void I2C_init(void)
@@ -85,7 +79,10 @@ void arbitration_lost(void)
 
 /*
 ***************************************************************************************************
-* Description : Do a I2C start condition.
+* Function: I2C_start
+* -------------------
+*   Do a I2C start condition.
+*
 ***************************************************************************************************
 */
 void I2C_start(void)
@@ -111,7 +108,10 @@ void I2C_start(void)
 
 /*
 ***************************************************************************************************
-* Description : Do a I2C stop condition.
+* Function: I2C_stop
+* ------------------
+*   Do a I2C stop condition.
+*
 ***************************************************************************************************
 */
 void I2C_stop(void)
@@ -134,12 +134,11 @@ void I2C_stop(void)
 
 /*
 ***************************************************************************************************
-* Description : Write a bit to the I2C Bus.
+* Function: I2C_write_bit
+* -----------------------
+*   Write a bit to the I2C Bus.
 *
-* Arguments   : BOOL    TRUE:  Logic high
-*                       FALSE: Logic low
-*
-* Returns     : none
+*   bit: bit to write
 *
 ***************************************************************************************************
 */
@@ -166,12 +165,11 @@ void I2C_write_bit(bool bit)
 
 /*
 ***************************************************************************************************
-* Description : Read a bit from the I2C Bus.
+* Function: I2C_read_bit
+* -----------------------
+*   Read a bit from the I2C Bus.
 *
-* Arguments   : none
-*
-* Returns     : BOOL    TRUE:  Logic high
-*                       FALSE: Logic low
+*   returns: true (logic high) or false (logic low)
 *
 ***************************************************************************************************
 */
@@ -195,18 +193,15 @@ bool I2C_read_bit(void)
 
 /*
 ***************************************************************************************************
-* Description : Write a byte to the I2C Bus.
+* Function: I2C_write_byte
+* ------------------------
+*   Write a byte to the I2C Bus.
 *
-* Arguments   : BOOL    TRUE:  Start condition
-*                       FALSE: No start condition
+*   send_start: send a start condition
+*   send_stop:  send a stop condition
+*   byte:       byte to write
 *
-*               BOOL    TRUE:  Stop condition
-*                       FALSE: No stop condition
-*
-*               unsigned char: Byte to write
-*
-* Returns     : BOOL    TRUE:  Not Acknowledge
-*                       FALSE: Acknowledge
+*   returns:    true (not acknowledge) or false (acknowledge)
 *
 ***************************************************************************************************
 */
@@ -236,15 +231,14 @@ bool I2C_write_byte(bool send_start, bool send_stop, unsigned char byte)
 
 /*
 ***************************************************************************************************
-* Description : Read a byte from the I2C Bus.
+* Function: I2C_read_byte
+* ------------------------
+*   Read a byte from the I2C Bus.
 *
-* Arguments   : BOOL    TRUE:  Send Not Acknowledge Bit
-*                       FALSE: Send Acknowledge Bit
+*   nack:       send not acknowledge bit
+*   send_stop:  send a stop condition
 *
-*               BOOL    TRUE:  Stop condition
-*                       FALSE: No stop condition
-*
-* Returns     : unsigned char: Byte from slave
+*   returns: byte from slave
 *
 ***************************************************************************************************
 */
@@ -269,16 +263,15 @@ unsigned char I2C_read_byte(bool nack, bool send_stop)
 
 /*
 ***************************************************************************************************
-* Description : Write a byte to the I2C slave with a 8 bit register.
+* Function: I2C_write
+* ------------------------
+*   Write a byte to the I2C slave with a 8 bit register.
 *
-* Arguments   : unsigned char: Slave address
+*   slave_address:  slave address
+*   slave_register: slave register
+*   data_to_write:  byte to write
 *
-*               unsigned char: Slave register
-*
-*               unsigned char: Byte to write
-*
-* Returns     : BOOL    TRUE:  Write successful
-*                       FALSE: Write not successful
+*   returns:        true (write successful) or false (write not successful)
 *
 ***************************************************************************************************
 */
@@ -296,13 +289,14 @@ bool I2C_write(unsigned char slave_address, unsigned char slave_register, unsign
 
 /*
 ***************************************************************************************************
-* Description : Read a byte from the I2C slave with a 8 bit register.
+* Function: I2C_read
+* ------------------------
+*   Read a byte from the I2C slave with a 8 bit register.
 *
-* Arguments   : unsigned char: Slave address
+*   slave_address:  slave address
+*   slave_register: slave register
 *
-*               unsigned char: Slave register
-*
-* Returns     : unsigned char: Byte from slave or 0xFF if read was not successful
+*   returns:        byte from slave or 0xFF if read was not successful
 *
 ***************************************************************************************************
 */
@@ -320,18 +314,16 @@ unsigned char I2C_read(unsigned char slave_address, unsigned char slave_register
 
 /*
 ***************************************************************************************************
-* Description : Write a byte to the I2C slave with a 16 bit register.
+* Function: I2C_write_16bit_addr
+* ------------------------------
+*   Write a byte to the I2C slave with a 16 bit register.
 *
-* Arguments   : unsigned char: Slave address
+*   slave_address:          slave address
+*   slave_high_register:    first 8 bit of slave register
+*   slave_low_register:     second 8 bit of slave register
+*   data_to_write:          byte to write
 *
-*               unsigned char: First 8 bit of slave register
-*
-*               unsigned char: Second 8 bit of slave register
-*
-*               unsigned char: Byte to write
-*
-* Returns     : BOOL    TRUE:  Write successful
-*                       FALSE: Write not successful
+*   returns:    true (write successful) or false (write not successful)
 *
 ***************************************************************************************************
 */
@@ -351,15 +343,15 @@ bool I2C_write_16bit_addr(unsigned char slave_address, unsigned char slave_high_
 
 /*
 ***************************************************************************************************
-* Description : Read a byte from the I2C slave with a 16 bit register.
+* Function: I2C_read_16bit_addr
+* ------------------------------
+*   Read a byte from the I2C slave with a 16 bit register.
 *
-* Arguments   : unsigned char: Slave Address
+*   slave_address:          slave address
+*   slave_high_register:    first 8 bit of slave register
+*   slave_low_register:     second 8 bit of slave register
 *
-*               unsigned char: First 8 bit of slave register
-*
-*               unsigned char: Second 8 bit of slave register
-*
-* Returns     : unsigned char: Byte from slave or 0xFF if read was not successful
+*   returns:    byte from slave or 0xFF if read was not successful
 *
 ***************************************************************************************************
 */
@@ -379,11 +371,13 @@ unsigned char I2C_read_16bit_addr(unsigned char slave_address, unsigned char sla
 
 /*
 ***************************************************************************************************
-* Description : Convert BCD to decimal
+* Function: BCD_to_decimal
+* --------------------------------
+*   Convert BCD to decimal
 *
-* Arguments   : unsigned char: BCD code
+*   bcd: BCD code
 *
-* Returns     : unsigned char: decimal number (0...99)
+*   returns: decimal number (0...99)
 *
 ***************************************************************************************************
 */
