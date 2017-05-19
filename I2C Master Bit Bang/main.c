@@ -1,59 +1,33 @@
 /*
 ***************************************************************************************************
-* Project  : I2C Master Bit Bang Driver
-* Filename : main.c
+* Project:  I2C Master Bit Bang Driver
+* Filename: main.c
 *
-* Created : 01.05.2017
-* Author  : M. Schuepbach
+* Created: 01.05.2017
+* Author:  M. Schuepbach
 *
-* Description : This is a test program for the I2C Master Bit Bang Driver.
-*               Tested with ATtiny841, RTC DS1307 and EEPROM AT24C32.
-*               Have a look at the Main loop for an example.
+* Description: This is a test program for the I2C Master Bit Bang Driver.
+*              Tested with ATtiny841, RTC DS1307 and EEPROM AT24C32.
+*              Have a look at the Main loop for an example.
 *
 ***************************************************************************************************
 */
 
-/*
-***************************************************************************************************
-*                                           DEFINES
-***************************************************************************************************
-*/
-#define F_CPU   1000000UL                   /* F_osc=8MHz & CKDIV=8 -> 1MHz */
-
-#define RTC_DS1307_ADDRESS      (0x68 << 1)     /* 7-bit address of RTC converted to 8-bit */
-#define EEPROM_AT24C32_ADDRESS   0xA0           /* 8-bit address of EEPROM */
-
-/*
-***************************************************************************************************
-*                                           INCLUDES
-***************************************************************************************************
-*/
-#include <avr/io.h>
-#include <util/delay.h>
-#include <stdbool.h>
-
+#include "main.h"
 #include "I2C_Master_Bit_Bang_Driver.h"
 
 
 /*
 ***************************************************************************************************
-*                                   GLOBAL VARIABLES AND ARRAYS
+**                                  GLOBAL VARIABLES AND ARRAYS
 ***************************************************************************************************
 */
-
+// Initialize global variables or arrays here
 
 
 /*
 ***************************************************************************************************
-*                                       FUNCTION PROTOTYPES
-***************************************************************************************************
-*/
-void init_ATtiny841_board(void);
-
-
-/*
-***************************************************************************************************
-*                                               MAIN
+**                                              MAIN
 ***************************************************************************************************
 */
 int main(void)
@@ -65,7 +39,7 @@ int main(void)
     volatile bool result2 = 0;           /* for debugging */
     
     /* Initializations */
-    init_ATtiny841_board();
+    ATtiny841_board_init();
     I2C_init();
     
     
@@ -90,10 +64,13 @@ int main(void)
 
 /*
 ***************************************************************************************************
-*                                             FUNCTIONS
+* Function: ATtiny841_board_init
+* ------------------------------
+*   Initializes the ports of the ATtiny841-board
+*
 ***************************************************************************************************
 */
-void init_ATtiny841_board(void)
+void ATtiny841_board_init(void)
 {
     /* 0 -> input | 1 -> output */
     
