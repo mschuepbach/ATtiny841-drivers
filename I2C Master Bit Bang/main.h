@@ -21,7 +21,7 @@
 **                                         USER DEFINES
 ***************************************************************************************************
 */
-#define F_CPU   8000000UL           /* F_osc=8MHz & CKDIV=1 -> 8MHz / 1 = 8MHz */
+#define F_CPU   1000000UL           /* F_osc=8MHz & CKDIV=8 -> 8MHz / 8 = 1MHz */
 
 #define RTC_DS1307_ADDRESS      (0x68 << 1)     /* 7-bit address of RTC converted to 8-bit */
 #define EEPROM_AT24C32_ADDRESS   0xA0           /* 8-bit address of EEPROM */
