@@ -30,8 +30,8 @@
 
 /*
 ***************************************************************************************************
-* Function: Add function name here
-* --------------------------------
+* Function: USART0_init
+* ---------------------
 *   Initializes USART0
 *   Settings: Asynchronous, 8 data bits, none parity, 1 stop bit
 *
@@ -50,8 +50,8 @@ void USART0_init(void)
 
 /*
 ***************************************************************************************************
-* Function: Add function name here
-* --------------------------------
+* Function: USART0_send_byte
+* --------------------------
 *   Send byte via USART0
 *
 *   byte_to_send: Byte that should me sent via USART0
